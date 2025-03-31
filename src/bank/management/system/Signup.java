@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.Random;
 
 public class Signup extends JFrame implements ActionListener {
@@ -176,7 +178,7 @@ public class Signup extends JFrame implements ActionListener {
         next.setFont(new Font("Raleway",Font.BOLD, 14));
         next.setBackground(Color.BLACK);
         next.setForeground(Color.WHITE);
-        next.setBounds(620,710,80,30);
+        next.setBounds(100,105,80,30);
         next.addActionListener(this);
         add(next);
 
@@ -193,8 +195,12 @@ public class Signup extends JFrame implements ActionListener {
 
         String formno = first;
         String name = textName.getText();
+
         String fname = textFname.getText();
         String dob = ((JTextField) dateChooser.getDateEditor().getUiComponent()).getText();
+        {
+            System.out.println("Enter valid age");
+        }
         String gender = null;
         if(r1.isSelected()){
             gender = "Male";
@@ -216,6 +222,19 @@ public class Signup extends JFrame implements ActionListener {
         String pincode = textPin.getText();
         String state = textState.getText();
 
+
+        try {
+            String name2 = textName.getText().trim();
+
+            // Check if name contains only capital letters
+            if (!name.matches("[A-Z ]+")) {
+                throw new IllegalArgumentException("Name must contain only capital letters (A-Z) and no numbers.");
+            }
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage(), "Invalid Input", JOptionPane.ERROR_MESSAGE);
+            return; // Stop execution if input is invalid
+        }
         try{
             if (textName.getText().equals("")){
                 JOptionPane.showMessageDialog(null, "Fill all the fields");
